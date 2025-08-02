@@ -2,7 +2,7 @@ import '../App.css';
 import { useEffect, useState } from 'react';
 import { Link } from 'react-router'; 
 
-interface Product {
+export interface Product {
   id: number;
   title: string;
   description: string;
@@ -56,8 +56,8 @@ export function Home() {
 
   return (
     <div className="container mx-auto px-4 py-8">
-      <h1 className="text-yellow-600 text-2xl">Home page</h1>
-      <h1 className="text-3xl font-bold text-emerald-800 mb-8 text-center">Produtos em Destaque</h1>
+      
+       <h1 className="text-3xl font-bold text-emerald-800 mb-8 text-center">Produtos em Destaque</h1>
       
       {products.length === 0 ? (
         <div className="text-center py-10">
