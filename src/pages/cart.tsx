@@ -12,33 +12,30 @@ export function Cart() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
-  // Carrega os produtos da API e inicializa o carrinho
   useEffect(() => {
-    const fetchProductsAndInitializeCart = async () => {
-      try {
-        const response = await fetch('http://localhost:3000/products');
-        
-        if (!response.ok) {
-          throw new Error(`Erro HTTP: ${response.status}`);
-        }
-        
-        const data = await response.json();
-        const products: Product[] = Array.isArray(data) ? data : data.products || [];
-        
-        // Inicializa o carrinho com 1 unidade de cada produto (ou pode carregar de localStorage)
-        
-        
-        
-      } catch (err) {
-        setError("Não foi possível carregar os produtos.");
-        console.error("Erro na requisição:", err);
-      } finally {
-        setLoading(false);
+  const fetchProducts = async () => {
+    try {
+      const response = await fetch('http://localhost:3000/products');
+      
+      if (!response.ok) {
+        throw new Error(`Erro HTTP: ${response.status}`);
       }
-    };
+      
+      const data = await response.json();
+      // Apenas carrega os produtos sem adicionar ao carrinho
+      const products: Product[] = Array.isArray(data) ? data : data.products || [];
+      
+      setCartItems([]);
+    } catch (err) {
+      setError("Não foi possível carregar os produtos.");
+      console.error("Erro na requisição:", err);
+    } finally {
+      setLoading(false);
+    }
+  };
 
-    fetchProductsAndInitializeCart();
-  }, []);
+  fetchProducts();
+}, []);
 
   // Calcula o total do carrinho
   const total = cartItems.reduce(
